@@ -1,7 +1,7 @@
 -- Write your PostgreSQL query statement below
 select
     p.product_id,
-    round(cast(sum(price * units) as numeric) / sum(units), 2) average_price
+    coalesce(round(cast(sum(price * units) as numeric) / sum(units), 2), 0) average_price
 from Prices p
     left join UnitsSold u
     on 1=1
