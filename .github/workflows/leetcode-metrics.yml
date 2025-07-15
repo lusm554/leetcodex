@@ -1,0 +1,31 @@
+name: LeetCode metrics
+
+on:
+  schedule: # раз в сутки в 06:00 UTC, 09:00 Moscow
+    - cron: "0 6 * * *"
+  workflow_dispatch: # запуск вручную
+  push: { branches: ["main"] }
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # чтобы коммитить svg
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+
+          # файл, который появится в репозитории
+          filename: metrics.leetcode.svg
+
+          # ничего лишнего, только LeetCode
+          base: ""
+
+          # включаем плагин
+          plugin_leetcode: yes
+          plugin_leetcode_user: lusm554 # твой логин на LeetCode
+          plugin_leetcode_sections: solved, skills, recent
+          # + опционально:
+          # plugin_leetcode_limit_recent: 5
+          # plugin_leetcode_limit_skills: 15
